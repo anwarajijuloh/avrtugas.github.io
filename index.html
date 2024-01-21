@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Tugas 2 A-VR</title>
+    <meta name="description" content="Tugas 2 A-VR">
+    <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+    <script src="https://npmcdn.com/aframe-animation-component@3.0.1"></script>
+    <script src="https://npmcdn.com/aframe-event-set-component@3.0.1"></script>
+    <script src="https://npmcdn.com/aframe-layout-component@3.0.1"></script>
+    <script src="https://npmcdn.com/aframe-template-component@3.1.1"></script>
+    <script src="components/set-image.js"></script>
+</head>
+
+<body>
+    <a-scene>
+        <a-assets>
+            <!-- Sky Images -->
+            <img id="sky-one" src="assets/sky-one.jpg">
+            <img id="sky-two" src="assets/sky-two.jpg">
+            <img id="sky-three" src="assets/sky-three.jpg">
+
+            <!-- Plane Texture -->
+            <img id="grass" src="assets/grass.jpg">
+            <img id="snow" src="assets/snow.jpg">
+            <img id="road" src="assets/road.jpg">
+
+            <!-- Audio CDN -->
+            <audio id="click-sound" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/audio/click.ogg"></audio>
+
+            <!-- Object Models -->
+            <a-asset-item id="bugatti-obj" src="models/bugatti.obj"></a-asset-item>
+            <a-asset-item id="bugatti-mtl" src="models/bugatti.mtl"></a-asset-item>
+
+            <!-- Mouse Events -->
+            <script id="link" type="text/html">
+                <a-entity class="link"
+                geometry="primitive: plane; height: 1; width: 1"
+                material="shader: flat; src: ${thumb}"
+                event-set__1="_event: mousedown; scale: 1 1 1"
+                event-set__2="_event: mouseup; scale: 1.2 1.2 1"
+                event-set__3="_event: mouseenter; scale: 1.2 1.2 1"
+                event-set__4="_event: mouseleave; scale: 1 1 1"
+                set-image="on: click; target: #image-360; src: ${src}"
+                sound="on: click; src: #click-sound">
+                </a-entity>
+            </script>
+        </a-assets>
+
+        <!-- 360-degree image. -->
+        <a-sky id="image-360" radius="10" src="#sky-one"></a-sky>
+
+        <!-- Image links. -->
+        <a-entity id="links" layout="type: line; margin: 1.5" position="0 -1 -4">
+            <a-entity template="src: #link" data-src="#sky-one" data-thumb="#grass"></a-entity>
+            <a-entity template="src: #link" data-src="#sky-two" data-thumb="#snow"></a-entity>
+            <a-entity template="src: #link" data-src="#sky-three" data-thumb="#road"></a-entity>
+        </a-entity>
+
+        <!-- Camera + cursor. -->
+        <a-camera>
+            <a-cursor id="cursor"></a-cursor>
+        </a-camera>
+    </a-scene>
+</body>
+
+</html>
